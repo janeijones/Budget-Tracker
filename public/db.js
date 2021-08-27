@@ -72,5 +72,15 @@ request.onsuccess = (e) => {
 
 //save record
 
+const saveRecord = (record) => {
+
+    const transaction = db.transaction(['budgetStore'], 'readwrite')
+
+    const store = transaction.objectStore('budgetStore');
+
+    store.add(record);
+    console.log('Record of transaction saved')
+};
 
 //add event listener 
+window.addEventListener('online', checkDB);
