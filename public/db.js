@@ -18,24 +18,57 @@ request.onupgradeneeded = (e) => {
 request.onerror = (e) => {
     console.log("Error handling: ")
     console.log(e.target.errorCode)
-}
+};
 
 
 //check Database then do transactions 
-function checkDB(){
+function checkDB() {
     console.log('Check sucessful...')
 
-    let transaction = db.transaction(['budgetStore'], 'readwrite')
-    
+    let transaction = db.transaction(['budgetStore'], 'readwrite') //initialize transaction
+
     const store = transaction.objectStore('budgetStore');
 
-    const getStore = store.getAll();
+    const getStore = store.getAll(); //getAll method for retrieving all transactions 
+    //console.log('Checking get store ' + getStore);
+
+    getStore.onsucess = function () {
+        if (getStore.result.length > 0) {
+            fetch('/api/transaction/bulk', {
+                method: "POST",
+                body: JSON.stringify(getAll.result),
+                headers: {
+                    Accept: 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then((response) => response.json())
+                .then((res) => {
+                    if (res.length !== 0) {
+
+                        transaction = db.transaction(['budgetStore'], 'readwrite')
+
+                        const currentStore = transaction.objectStore('budgetStore');
+
+                        currentStore.clear(); //clear store
+                        console.log("Clearing Store")
+                    }
+                });
+        }
+    }
 }
 
-
-
-
-
+request.onsuccess = (e) => {
+    console.log('Successfully added..'); 
+    db = e.target.result;
+    
+    if (navigator.onLine){
+        console.log('DB is online');
+        checkDB(); 
+    } else {
+        console.log(errorCode)
+    }
+}
 
 //save record
 
