@@ -24,7 +24,7 @@ The project will deploy at <a href = "localhost:300"> localhost:3000</a>
 </ol>
 Your total and chart will be automatically updated. 
 
-[!gif](./Assets/Budget-Tracker.gif)
+![gif](./Assets/Budget-Tracker.gif)
 
 <a href = "https://pure-plains-17816.herokuapp.com/"> Deployed Heroku Application </a>
 
