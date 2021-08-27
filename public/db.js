@@ -1,4 +1,6 @@
 // add global variables
+let db;
+let budgetVersion;
 
 //initialize IndexedDB
 
