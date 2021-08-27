@@ -66,7 +66,7 @@ request.onsuccess = (e) => {
         console.log('DB is online');
         checkDB(); 
     } else {
-        console.log(errorCode)
+        console.log("Error: " + errorCode)
     }
 }
 
