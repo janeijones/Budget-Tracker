@@ -3,9 +3,9 @@ let db;
 let budgetVersion;
 
 //initialize IndexedDB
-const request = indexedDB.open('budget_db', budgetVersion || 21);
+const request = indexedDB.open('budget_db', budgetVersion || 21); //sync db to upgraded version
 
-//sync db to upgraded version
+
 
 request.onupgradeneeded = (e) => {
     db = e.target.result;
@@ -15,10 +15,22 @@ request.onupgradeneeded = (e) => {
     }
 };
 
-
+request.onerror = (e) => {
+    console.log("Error handling: ")
+    console.log(e.target.errorCode)
+}
 
 
 //check Database then do transactions 
+function checkDB(){
+    console.log('Check sucessful...')
+
+    let transaction = db.transaction(['budgetStore'], 'readwrite')
+    
+    const store = transaction.objectStore('budgetStore');
+
+    const getStore = store.getAll();
+}
 
 
 
